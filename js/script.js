@@ -8,6 +8,7 @@ const btnNext = document.querySelector('.btn-next');
 
 
 let numPokemon = 1;
+let listPokemon;
 const fetchPokemon = async (pokemon) =>{
     const APIreponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
     if(APIreponse.status == 200){ 
@@ -25,18 +26,19 @@ const renderPokemon = async (pokemon) =>{
         pokemonImg.style.display = 'block';
         pokemonName.innerHTML = data.name;
         pokemonNumber.innerHTML = data.id;
+        listPokemon = data.id;
         pokemonImg.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
         numPokemon = data.id;
+
     }else{
         pokemonImg.style.display = 'none'
         pokemonName.innerHTML = 'Not found';
         pokemonNumber.innerHTML = '';
-        numPokemon = 1;
+        numPokemon = listPokemon;
 
     }
-
-
 }
+
 renderPokemon(numPokemon);
 
 pokedexForm.addEventListener('submit',(event)=>{
@@ -52,10 +54,8 @@ btnNext.addEventListener('click',  ()=>{
 })
 
 btnPrev.addEventListener('click', ()=>{
-    if(--numPokemon > 0){
-        renderPokemon(numPokemon);
-    }else{
-        numPokemon = 1;
+    if(numPokemon != 1){
+        --numPokemon;
         renderPokemon(numPokemon);
     }
     
