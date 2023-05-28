@@ -60,3 +60,4 @@ btnPrev.addEventListener('click', ()=>{
     }
     
 })
+//alterar
